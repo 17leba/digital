@@ -5,7 +5,7 @@
 </template>
 <script>
 import cesiumInit from "./gis3d.js";
-import rtAnimateBySocket from "./wbsocket.js";
+import rtAnimateBySocket from "./websocket.js";
 
 export default {
   data() {
@@ -137,13 +137,12 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
+<style  scoped>
 .app-wrapp {
   position: absolute;
-  top: r(-20);
   left: 0;
   width: 100%;
-  height: calc(100% + r(20));
+  height: 100%;
 }
 .cesium-container {
   height: 100%;

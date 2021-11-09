@@ -1799,6 +1799,11 @@ vue@^3.1.4:
     "@vue/runtime-dom" "3.1.4"
     "@vue/shared" "3.1.4"
 
+web3dapisdk@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/web3dapisdk/-/web3dapisdk-1.1.2.tgz#7934e8505ad8254ee2f7717a1e50a67ba92b29cd"
+  integrity sha512-QtWP4dNjB6Kcy641lc22LBWuJefmAoXeqHNbE4Rbe25tx5GGOXYgqsPeFxrfr7PzlNTb97bKlsd+79yH3taLQA==
+
 yallist@^3.0.2:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-3.1.1.tgz#dbb7daf9bfd8bac9ab45ebf602b8cbad0d5d08fd"
