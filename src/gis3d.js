@@ -15,7 +15,7 @@ import {
   weblogUtils,
   cesiumUtils,
   Map3dCompass,
-} from "./sdk.js";
+} from "web3dapisdk";
 import { map3dConfig } from "./const";
 const { staticHost, dataHost } = map3dConfig;
 

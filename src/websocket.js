@@ -7,7 +7,7 @@ import {
   diffUpdateOperate,
   confirmRemove,
   MapUtils,
-} from "./sdk.js";
+} from "web3dapisdk";
 import { map3dConfig } from "./const";
 
 let rtAnimateBySocket = {
