@@ -42,5 +42,5 @@ export const map3dConfig = {
   staticHost: "https://eagleimage.zhidaozhixing.com",
   dataHost: "https://eagle.zhidaozhixing.com",
   wsHost: "wss://digital-twins-ws-test.zhidaohulian.com/ws",
-  wsHostProd: "wss://digital-twins-ws-proip.zhidaohulian.com/ws",
+  wsHostProd: "wss://digital-twins-ws-hy.zhidaozhixing.com/ws",
 };

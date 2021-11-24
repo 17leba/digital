@@ -54,7 +54,9 @@ let cesiumInit = {
     return this.viewer;
   },
   handleEntityEvent(type, cb) {
-    let handler3D = new Cesium.ScreenSpaceEventHandler(this.viewer.scene.canvas);
+    let handler3D = new Cesium.ScreenSpaceEventHandler(
+      this.viewer.scene.canvas
+    );
     // handler3D.setInputAction(function(movement) {
     handler3D.setInputAction((movement) => {
       //获取primitive
@@ -245,9 +247,12 @@ let cesiumInit = {
     let map3dcompass = new Map3dCompass(this.viewer);
   },
   setView(v = {}) {
-    // 112.57756565920 ","26.82019106028 衡阳
-    // 112.587131,26.821554 科学城路口
-    const { lng = 116.7356604713664, lat = 40.19832687206192, h = 100 } = v;
+    // 衡阳
+    // lng: 112.5695693,
+    // lat: 26.8504102,
+    // 顺义
+    // lng = 116.7356604713664, lat = 40.19832687206192,
+    const { lng = 112.5695693, lat = 26.8504102, h = 100 } = v;
     console.log(lng, lat, h);
     let p = Cesium.Cartesian3.fromDegrees(lng, lat, h);
     let flyToOpts = {
@@ -262,7 +267,7 @@ let cesiumInit = {
     };
     this.viewer.scene.camera.setView(flyToOpts);
   },
-  
+
   setPositions() {
     // let track_hengyang = trackData.gettrack_hengyang_2021030();
     let track_hengyang = trackData722.gettrack_hengyang_20210722();
@@ -270,7 +275,11 @@ let cesiumInit = {
     var n = Math.min(this.drawNumber, track_hengyang.length);
     for (var i = 0; i < n; i++) {
       // console.log([track_hengyang[i][1], track_hengyang[i][2]]);
-      let p = Cesium.Cartesian3.fromDegrees(track_hengyang[i][1], track_hengyang[i][2], 0);
+      let p = Cesium.Cartesian3.fromDegrees(
+        track_hengyang[i][1],
+        track_hengyang[i][2],
+        0
+      );
       // console.log(p);
       positions.push(p);
       // console.log(positions);
@@ -278,7 +287,7 @@ let cesiumInit = {
     // console.log(positions);
     return positions;
   },
-  
+
   //加载3dtiles数据
   load3dtiles() {
     var tileset = this.viewer.scene.primitives.add(
@@ -295,7 +304,9 @@ let cesiumInit = {
     // && parameters[2]>=-200 && parameters[2]<=200
     let firstpersonPerspectiveParameters = [-80, 0, 200];
     console.log(firstpersonPerspectiveParameters);
-    this.trackedAnimate.addFirstPersonPerspective(firstpersonPerspectiveParameters);
+    this.trackedAnimate.addFirstPersonPerspective(
+      firstpersonPerspectiveParameters
+    );
     // this.trackedAnimate.addFirstPersonPerspective();
   },
   removeFirstPersonPerspective() {
@@ -339,9 +350,13 @@ let cesiumInit = {
         //创建一个灯
         let modelMatrix = objArr[0].model.modelMatrix;
         let modelUri = `${staticHost}/static/gltf/${newModelStatus}.glb`;
-        let model = mapUtils.createModelByModelMatrix(NewstatusId, modelUri, modelMatrix);
+        let model = mapUtils.createModelByModelMatrix(
+          NewstatusId,
+          modelUri,
+          modelMatrix
+        );
         if (model != undefined) {
-          model.readyPromise.then(function(model) {
+          model.readyPromise.then(function (model) {
             //删除其他灯态的模型
             for (let i = 0; i < objArr.length; i++) {
               if (objArr[i].modelStatus != newModelStatus) {
@@ -371,7 +386,11 @@ let cesiumInit = {
     setTimeout(() => {
       let countdownSignal = new CountdownSignal(this.viewer);
       // countdownSignal.updateCountdownSignalById(id,color,number);
-      countdownSignal.updateCountdownSignalDoubledigitModelById(id, color, number);
+      countdownSignal.updateCountdownSignalDoubledigitModelById(
+        id,
+        color,
+        number
+      );
 
       number = number - 1;
       console.log("number:", number);
@@ -383,7 +402,11 @@ let cesiumInit = {
   setCountdownSignal(id, color, number) {
     let countdownSignal = new CountdownSignal(this.viewer);
     let modelId = `trafficlight_shunyi_V1.1.${id}`;
-    countdownSignal.updateCountdownSignalDoubledigitModelById(modelId, color, number);
+    countdownSignal.updateCountdownSignalDoubledigitModelById(
+      modelId,
+      color,
+      number
+    );
   },
   limitMaxmumMaplevel() {
     let mapUtils = new MapUtils(this.viewer);
@@ -408,7 +431,9 @@ let cesiumInit = {
     Road.drawRoadWFS(road_shunyi_2020101401_1_V1_2);
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(road_shunyi_2020101401_1_V1_2);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      road_shunyi_2020101401_1_V1_2
+    );
     this.LayerNames.push(layerName);
   },
   drawGreenBelts() {
@@ -418,7 +443,9 @@ let cesiumInit = {
     GreenBelts.drawGreenBeltsWFS(WFSgreenbelts_Hengyang_NoAltitude);
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(WFSgreenbelts_Hengyang_NoAltitude);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      WFSgreenbelts_Hengyang_NoAltitude
+    );
     this.LayerNames.push(layerName);
   },
   drawDivider() {
@@ -438,7 +465,9 @@ let cesiumInit = {
     // Divider.addDividerLocalGeojson();
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(WFSdividerHengyangNoaltitude);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      WFSdividerHengyangNoaltitude
+    );
     this.LayerNames.push(layerName);
   },
   drawDividerShunyi() {
@@ -454,26 +483,36 @@ let cesiumInit = {
     Divider.drawDividerPolylineWFSPrimitive(WFSdividerPolylineshunyiNoaltitude);
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(WFSdividerPolylineshunyiNoaltitude);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      WFSdividerPolylineshunyiNoaltitude
+    );
     this.LayerNames.push(layerName);
   },
   drawStoplineShunyi() {
     let Stopline = new Stoplinesss(this.viewer);
     let WFSStoplinePolylineshunyiNoaltitude = `${dataHost}/geoserver/mogoHDMap2/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=mogoHDMap2%3Ashunyi_stopline&maxFeatures=50000&outputFormat=application%2Fjson`;
-    Stopline.drawStoplinePolylineWFSPrimitive(WFSStoplinePolylineshunyiNoaltitude);
+    Stopline.drawStoplinePolylineWFSPrimitive(
+      WFSStoplinePolylineshunyiNoaltitude
+    );
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(WFSStoplinePolylineshunyiNoaltitude);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      WFSStoplinePolylineshunyiNoaltitude
+    );
     this.LayerNames.push(layerName);
   },
   drawStopline() {
     let Stopline = new Stoplinesss(this.viewer);
     // let WFSStoplinePolylineHengyang = "https://eagle.zhidaozhixing.com/geoserver/mogoHDMap2/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=mogoHDMap2%3AStopLine_Hengyang&maxFeatures=50000&outputFormat=application%2Fjson";
     let WFSStoplinePolylineHengyangNoAltitude = `${dataHost}/geoserver/mogoHDMap2/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=mogoHDMap2%3AStopLine_Hengyang_Noaltitude&maxFeatures=50000&outputFormat=application%2Fjson`;
-    Stopline.drawStoplinePolylineWFSPrimitive(WFSStoplinePolylineHengyangNoAltitude);
+    Stopline.drawStoplinePolylineWFSPrimitive(
+      WFSStoplinePolylineHengyangNoAltitude
+    );
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(WFSStoplinePolylineHengyangNoAltitude);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      WFSStoplinePolylineHengyangNoAltitude
+    );
     this.LayerNames.push(layerName);
   },
   drawArrowShunyi() {
@@ -483,7 +522,9 @@ let cesiumInit = {
     // Arrow.drawArrowPolygonWFS(WFSarrowPolygonShunyiNoaltitude);
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(WFSarrowPolygonShunyiNoaltitude);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      WFSarrowPolygonShunyiNoaltitude
+    );
     this.LayerNames.push(layerName);
   },
   drawArrow() {
@@ -493,7 +534,9 @@ let cesiumInit = {
     Arrow.drawArrowPolygonWFSPrimitive(WFSarrowPolygonHengyangNoaltitude);
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(WFSarrowPolygonHengyangNoaltitude);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      WFSarrowPolygonHengyangNoaltitude
+    );
     this.LayerNames.push(layerName);
   },
   drawZebraShunyi() {
@@ -502,7 +545,9 @@ let cesiumInit = {
     Zebra.drawZebraPolygonWFSPrimitive(WFSzebraPolygonShunyiNoaltitude);
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(WFSzebraPolygonShunyiNoaltitude);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      WFSzebraPolygonShunyiNoaltitude
+    );
     this.LayerNames.push(layerName);
   },
   drawZebra() {
@@ -512,7 +557,9 @@ let cesiumInit = {
     Zebra.drawZebraPolygonWFSPrimitive(WFSzebraPolygonHengyangNoaltitude);
 
     //用于日志记录，初始化的图层
-    let layerName = cesiumUtils.getLayernameByWFSUrl(WFSzebraPolygonHengyangNoaltitude);
+    let layerName = cesiumUtils.getLayernameByWFSUrl(
+      WFSzebraPolygonHengyangNoaltitude
+    );
     this.LayerNames.push(layerName);
   },
   drawStreetLightsShunyi() {
@@ -539,7 +586,9 @@ let cesiumInit = {
 
     //读秒器
     let countdownSignal = new CountdownSignal(this.viewer);
-    countdownSignal.drawCountdownSignalPicturePrimitive(WFStrafficlight_hengyang);
+    countdownSignal.drawCountdownSignalPicturePrimitive(
+      WFStrafficlight_hengyang
+    );
 
     //用于日志记录，初始化的图层
     let layerName1 = cesiumUtils.getLayernameByWFSUrl(WFScamera_hengyang);
@@ -585,7 +634,10 @@ let cesiumInit = {
     const roll = Cesium.Math.toRadians(rotateZ);
 
     const hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-    const orientation = Cesium.Transforms.headingPitchRollQuaternion(origin, hpr);
+    const orientation = Cesium.Transforms.headingPitchRollQuaternion(
+      origin,
+      hpr
+    );
     entity.orientation = orientation;
   },
   clearRoam() {

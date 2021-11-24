@@ -114,7 +114,7 @@ let rtAnimateBySocket = {
   initWebSocket(v) {
     this.removeSenddata();
     // let lostListF = manyTimesLostList(this.tempDataSize);
-    this.socket = new WebSocket(map3dConfig.wsHost);
+    this.socket = new WebSocket(map3dConfig.wsHostProd);
     // this.socket = new WebSocket("ws://172.30.33.77:3335/ws");
     this.socket.addEventListener("open", async (e) => {
       if (e.currentTarget["readyState"] === WebSocket.OPEN) {
@@ -137,7 +137,9 @@ let rtAnimateBySocket = {
       // 单车跟踪模式
       if (v && v.traceOpen) {
         const { sn } = v;
-        let curEntity = this.mapUtils.getModelPrimitiveById("realtimeEntity-" + sn);
+        let curEntity = this.mapUtils.getModelPrimitiveById(
+          "realtimeEntity-" + sn
+        );
         if (this.curStatus) {
           if (curEntity) {
             this.viewer.trackedEntity = curEntity;
@@ -190,7 +192,10 @@ let rtAnimateBySocket = {
           if (allList[i].uuid === this.lastallList[j].uuid) {
             isFind = true;
             //当前段的长度
-            let point1Arr = [this.lastallList[j].wgslon, this.lastallList[j].wgslat];
+            let point1Arr = [
+              this.lastallList[j].wgslon,
+              this.lastallList[j].wgslat,
+            ];
             let point2Arr = [obj.wgslon, obj.wgslat];
             let point1 = turf.point(point1Arr);
             let point2 = turf.point(point2Arr);
@@ -263,7 +268,11 @@ let rtAnimateBySocket = {
     }
   },
   setView() {
-    let p = Cesium.Cartesian3.fromDegrees(116.7356604713664, 40.19832687206192, 100);
+    let p = Cesium.Cartesian3.fromDegrees(
+      116.7356604713664,
+      40.19832687206192,
+      100
+    );
     let flyToOpts = {
       destination: p,
       orientation: {
@@ -277,7 +286,19 @@ let rtAnimateBySocket = {
     this.viewer.scene.camera.setView(flyToOpts);
   },
   sendWS(v = {}) {
-    const { lat = 40.19915, lng = 116.738259, trace = 0, traceOpen = 0, sn } = v;
+    // 衡阳
+    // lng: 112.5695693,
+    // lat: 26.8504102,
+    // 顺义
+    // lng: 116.738259
+    // lat:40.19915
+    const {
+      lat = 26.8504102,
+      lng = 112.5695693,
+      trace = 0,
+      traceOpen = 0,
+      sn,
+    } = v;
     // 发送设备信息绑定
     this.socket.send(
       JSON.stringify({
@@ -335,7 +356,8 @@ let rtAnimateBySocket = {
           let lineTwoPoint = turf.lineString([point1Arr, point2Arr]);
           let lineTwoPointLength = turf.lineDistance(lineTwoPoint);
           let nDistance =
-            lineTwoPointLength * ((timeRender - Listpacket.beginTime) / Listpacket.duration);
+            lineTwoPointLength *
+            ((timeRender - Listpacket.beginTime) / Listpacket.duration);
           // let nDistance = lineTwoPointLength/2;
           // console.log("nDistance:",nDistance);
           let pointCurrent = turf.along(lineTwoPoint, nDistance, units);
@@ -354,25 +376,34 @@ let rtAnimateBySocket = {
     }
   },
 
-  
   updateShowId(Listpacket) {
     try {
-      let position = Cesium.Cartesian3.fromDegrees(Listpacket.wgslon, Listpacket.wgslat, 0);
+      let position = Cesium.Cartesian3.fromDegrees(
+        Listpacket.wgslon,
+        Listpacket.wgslat,
+        0
+      );
       // let gheading = Listpacket.heading/180* Math.PI;
       // let gheading = -90/180* Math.PI;
       let gheading = ((Listpacket.heading - 90) / 180) * Math.PI;
       let gpitch = Cesium.Math.toRadians(0);
       let groll = Cesium.Math.toRadians(0);
       let hpr = new Cesium.HeadingPitchRoll(gheading, gpitch, groll);
-      let orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
-      let tempentity = this.viewer.entities.getById("realtimeEntity-" + Listpacket.uuid);
+      let orientation = Cesium.Transforms.headingPitchRollQuaternion(
+        position,
+        hpr
+      );
+      let tempentity = this.viewer.entities.getById(
+        "realtimeEntity-" + Listpacket.uuid
+      );
       let positionLasttime = tempentity.position;
       let satelliteTimeLasttime = tempentity.satelliteTime;
       tempentity.satelliteTime =
-        Listpacket.satelliteTime != undefined ? Listpacket.satelliteTime.toString() : 0;
+        Listpacket.satelliteTime != undefined
+          ? Listpacket.satelliteTime.toString()
+          : 0;
       tempentity.position = position;
       tempentity.orientation = orientation;
-      
     } catch (e) {
       console.log("update:" + e);
     }
